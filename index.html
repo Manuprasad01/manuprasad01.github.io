@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Manuprasad K - Cybersecurity Analyst, SOC Enthusiast, and M.Sc Computer Science Graduate.">
+    <title>Manuprasad K | Cybersecurity Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #0f1219;
+            --text-primary: #e0e6ed;
+            --text-secondary: #94a3b8;
+            --accent: #00ff41; /* Matrix Green */
+            --accent-dim: rgba(0, 255, 65, 0.1);
+            --glass: rgba(15, 18, 25, 0.85);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- MATRIX CANVAS --- */
+        #matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        .btn-download {
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .btn-download:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .typing-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            height: 2rem; /* Reserve space */
+        }
+
+        .social-hero {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-hero a {
+            color: var(--text-secondary);
+            font-size: 1.8rem;
+            transition: var(--transition);
+        }
+
+        .social-hero a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* --- SECTIONS COMMON --- */
+        section {
+            padding: 6rem 10%;
+            opacity: 0; /* For scroll reveal */
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        /* --- ABOUT --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .stat {
+            margin-bottom: 1rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .stat span { display: block; font-size: 0.9rem; color: var(--text-secondary); }
+        .stat strong { font-size: 1.2rem; color: #fff; }
+
+        /* --- SKILLS --- */
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .skill-pill {
+            background: var(--card-bg);
+            border: 1px solid #2d3748;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .skill-pill i { color: var(--accent); }
+
+        .skill-pill:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-dim);
+            transform: translateY(-3px);
+        }
+
+        /* --- PROJECTS --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before { transform: scaleX(1); }
+
+        .project-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card h3 { margin-bottom: 1rem; font-size: 1.4rem; }
+        
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .btn-small {
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #fff;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 2px;
+        }
+
+        /* --- TIMELINE (Education) --- */
+        .timeline {
+            position: relative;
+            border-left: 2px solid #1e293b;
+            margin-left: 1rem;
+        }
+
+        .timeline-item {
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -6px; top: 5px;
+            width: 10px; height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .timeline-date {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid #1e293b;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Simplified for mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <nav>
+        <div class="logo">MANUPRASAD_K</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#education">Education</a>
+            <a href="resume.pdf" class="btn-download" target="_blank"><i class="fas fa-download"></i> Resume</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-content">
+            <h1>Manuprasad K</h1>
+            <div class="typing-text" id="typing-text"></div>
+            
+            <div class="social-hero">
+                <a href="https://www.linkedin.com/in/manuprasad-k" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Manuprasad01" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:manupkm24@gmail.com"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about">
+        <h2 class="section-title">01. Identity</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    [cite_start]I am a highly motivated <strong>Cybersecurity Enthusiast</strong> with an M.Sc. in Computer Science[cite: 5]. My focus lies in threat detection, incident response, and network security monitoring. [cite_start]I specialize in identifying and mitigating security threats using industry-standard SIEM tools and simulated lab environments[cite: 8].
+                </p>
+                <p>
+                    [cite_start]Currently certified in <strong>IT Infrastructure and SOC Analysis (CICSA)</strong>[cite: 7], I combine theoretical knowledge with hands-on offensive and defensive capabilities. I am actively seeking a role as a SOC Analyst to protect organizational assets.
+                </p>
+            </div>
+            <div class="highlight-box">
+                <div class="stat">
+                    <span>Degree</span>
+                    <strong>M.Sc. [cite_start]Comp Sci (84%) [cite: 17]</strong>
+                </div>
+                <div class="stat">
+                    <span>Certification</span>
+                    [cite_start]<strong>CICSA (RedTeam) [cite: 7]</strong>
+                </div>
+                <div class="stat">
+                    <span>Location</span>
+                    [cite_start]<strong>Kannur, Kerala [cite: 20]</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title">02. Arsenal</h2>
+        <div class="skills-wrapper">
+            <div class="skill-pill"><i class="fas fa-search"></i> Wireshark</div>
+            <div class="skill-pill"><i class="fas fa-network-wired"></i> Nmap</div>
+            <div class="skill-pill"><i class="fas fa-chart-bar"></i> Splunk</div>
+            <div class="skill-pill"><i class="fas fa-bomb"></i> Metasploit</div>
+            <div class="skill-pill"><i class="fas fa-bug"></i> Burp Suite</div>
+            [cite_start]<div class="skill-pill"><i class="fab fa-python"></i> Python [cite: 13]</div>
+            [cite_start]<div class="skill-pill"><i class="fab fa-linux"></i> Linux (Kali/Ubuntu) [cite: 11]</div>
+            [cite_start]<div class="skill-pill"><i class="fas fa-shield-virus"></i> Incident Response [cite: 14]</div>
+            [cite_start]<div class="skill-pill"><i class="fas fa-lock"></i> Cryptography (SHA256) [cite: 25]</div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">03. Operations</h2>
+        <div class="project-grid">
+            
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-file-code"></i></div>
+                <h3>File Integrity Checker</h3>
+                <p>Engineered a Python tool to calculate and verify cryptographic hashes (SHA256). Ensures data integrity by detecting unauthorized file modifications.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Cryptography</span>
+                    <span class="tag">SHA256</span>
+                </div>
+                <a href="https://github.com/Manuprasad01" class="btn-small">View Code <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-user-secret"></i></div>
+                <h3>VulnHub Exploitation</h3>
+                <p>Exploited the "Matrix-Breakout: 2 Morpheus" machine. Performed reconnaissance, enumeration, and privilege escalation to gain root access.</p>
+                <div class="tags">
+                    <span class="tag">Kali Linux</span>
+                    <span class="tag">PenTesting</span>
+                    <span class="tag">PrivEsc</span>
+                </div>
+                <a href="#" class="btn-small">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon"><i class="fas fa-satellite-dish"></i></div>
+                <h3>Network Defense Labs</h3>
+                <p>Hands-on simulation of real-world threats on TryHackMe & EC-Council iLabs. Analyzed traffic with Wireshark and mapped networks via Nmap.</p>
+                <div class="tags">
+                    <span class="tag">Wireshark</span>
+                    <span class="tag">Nmap</span>
+                    <span class="tag">Forensics</span>
+                </div>
+            </div>
+
+             <div class="project-card">
+                <div class="project-icon"><i class="fas fa-gamepad"></i></div>
+                <h3>Auditory Sensing Game</h3>
+                <p>Developed an accessible auditory game for autistic students under SCERT. Solved user-centric challenges through software design.</p>
+                <div class="tags">
+                    <span class="tag">Development</span>
+                    <span class="tag">Accessibility</span>
+                    <span class="tag">SCERT</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="education">
+        <h2 class="section-title">04. Education & Certs</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2025 (Expected)</div>
+                <h3>Certified IT Infrastructure & SOC Analyst (CICSA)</h3>
+                <p>RedTeam Hacker Academy</p>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">Completed</div>
+                <h3>Cyber Threat Management</h3>
+                <p>Cisco Networking Academy</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2022 - 2024</div>
+                <h3>M.Sc. Computer Science (84%)</h3>
+                <p>Kannur University Campus Mangattuparamba</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2019 - 2022</div>
+                <h3>B.Sc. Computer Science (82.4%)</h3>
+                <p>Government College Kasaragod</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built by Manuprasad K | <a href="https://github.com/Manuprasad01" style="color: var(--accent);">GitHub Pages</a></p>
+    </footer>
+
+    <script>
+        // 1. TYPING EFFECT
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["SOC Analyst", "Threat Hunter", "Security Enthusiast", "Python Developer"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                setTimeout(type, 2000); // Pause at end
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                setTimeout(type, 500); // Pause before new word
+            } else {
+                setTimeout(type, isDeleting ? 100 : 200);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        // 2. SCROLL REVEAL
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 3. MATRIX RAIN EFFECT (Canvas)
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロヲゴゾドボポ1234567890';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const alphabet = katakana + latin + nums;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.ceil(columns)).fill(1);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)'; // Fade effect
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0'; // Green text
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+        setInterval(draw, 30);
+    </script>
+</body>
+</html>
