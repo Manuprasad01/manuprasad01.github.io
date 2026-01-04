@@ -347,6 +347,125 @@
             .about-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; } /* Simplified for mobile */
         }
+
+
+
+        /* --- FEATURED CASE STUDY SECTION --- */
+        .case-study-container {
+            background: rgba(15, 18, 25, 0.5);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .case-study-container::before {
+            content: 'LIVE_OPERATION_LOG';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            color: var(--accent);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #1e293b;
+        }
+
+        .phase-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* Text left, Image right */
+            gap: 2rem;
+            margin-bottom: 4rem;
+            align-items: start;
+        }
+
+        .phase-row:last-child { margin-bottom: 0; }
+
+        /* Alternate layout for visual interest */
+        .phase-row.reverse { grid-template-columns: 1.5fr 1fr; }
+        .phase-row.reverse .phase-content { order: 2; }
+        .phase-row.reverse .window-frame { order: 1; }
+
+        .phase-badge {
+            display: inline-block;
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--accent);
+        }
+
+        .phase-content h3 {
+            margin-bottom: 1rem;
+            color: #fff;
+            font-size: 1.3rem;
+        }
+
+        .phase-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .caption {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            border-left: 2px solid var(--accent);
+            padding-left: 10px;
+            margin-top: 10px;
+        }
+
+        /* Terminal Window Styling for Screenshots */
+        .window-frame {
+            background: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+        }
+
+        .window-frame:hover {
+            transform: scale(1.02);
+            border-color: var(--accent);
+        }
+
+        .window-header {
+            background: #2d2d2d;
+            padding: 8px 15px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .window-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.9;
+        }
+
+        /* Mobile Adjustments for Case Study */
+        @media (max-width: 768px) {
+            .phase-row, .phase-row.reverse {
+                grid-template-columns: 1fr;
+            }
+            .phase-row.reverse .phase-content { order: 1; }
+            .phase-row.reverse .window-frame { order: 2; }
+        }
+
+
     </style>
 </head>
 <body>
@@ -359,7 +478,8 @@
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
-            <a href="#education">Education</a>
+            <a href="#featured">Case Study</a> <a href="#education">Education</a>
+            <!-- <a href="#education">Education</a> -->
             <a href="resume.pdf" class="btn-download" target="_blank"><i class="fas fa-download"></i> Resume</a>
         </div>
     </nav>
@@ -459,7 +579,7 @@
                     <span class="tag">PenTesting</span>
                     <span class="tag">PrivEsc</span>
                 </div>
-                <a href="#" class="btn-small">View Details <i class="fas fa-arrow-right"></i></a>
+                <a href="https://drive.google.com/file/d/1u5pAjVRLd6UObqC9GPO7kr8m_35hrJbb/view?usp=drive_link" class="btn-small">View Details <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <div class="project-card">
@@ -487,8 +607,73 @@
         </div>
     </section>
 
+     <section id="featured">
+        <h2 class="section-title">04. Featured Case Study</h2>
+        
+        <div class="case-study-container">
+            
+            <div class="phase-row">
+                <div class="phase-content">
+                    <span class="phase-badge">PHASE 1: OFFENSE (RED TEAM)</span>
+                    <h3>SMB Brute Force Execution</h3>
+                    <p>
+                        Using <strong>Kali Linux</strong>, I simulated an unauthorized access attempt targeting the Windows 7 endpoint. I utilized <strong>Hydra</strong> to execute a dictionary attack against the SMB protocol (Port 445), deliberately generating high-volume authentication traffic to test the SIEM's threshold settings.
+                    </p>
+                    <div class="caption">
+                        CMD: hydra -l Manu -p wrongpass smb://192.168.20.7
+                    </div>
+                </div>
+                <div class="window-frame">
+                    <div class="window-header">
+                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    </div>
+                    <img src="image1.png" alt="Kali Linux Hydra Attack Terminal">
+                </div>
+            </div>
+
+            <div class="phase-row reverse">
+                <div class="phase-content">
+                    <span class="phase-badge">PHASE 2: DETECTION (BLUE TEAM)</span>
+                    <h3>Real-Time Alert Triggering</h3>
+                    <p>
+                        The <strong>Wazuh Manager</strong> successfully ingested logs from the Windows Agent. The custom Audit Policy I configured (Event ID 4625) ensured failures were recorded. The dashboard immediately visualized a spike in severity, triggering <strong>Rule ID 60122</strong> (Logon Failure) 11 times in rapid succession.
+                    </p>
+                    <div class="caption">
+                        "Wazuh SIEM detecting the spike in failed login attempts in real-time."
+                    </div>
+                </div>
+                <div class="window-frame">
+                    <div class="window-header">
+                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    </div>
+                    <img src="image2.png" alt="Wazuh Dashboard Alerts">
+                </div>
+            </div>
+
+            <div class="phase-row">
+                <div class="phase-content">
+                    <span class="phase-badge">PHASE 3: FORENSICS & ANALYSIS</span>
+                    <h3>IOC Identification</h3>
+                    <p>
+                        Drilling down into the alert data provided concrete <strong>Indicators of Compromise (IOCs)</strong>. I successfully correlated the timestamp of the alerts with the attacker's machine. The log data confirmed the Source IP <code>192.168.20.8</code> and the targeted user account "Manu", validating the nature of the attack.
+                    </p>
+                    <div class="caption">
+                        "Forensic analysis confirming the attack source originated from 192.168.20.8"
+                    </div>
+                </div>
+                <div class="window-frame">
+                    <div class="window-header">
+                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    </div>
+                    <img src="image3.png" alt="Expanded Log Details">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <section id="education">
-        <h2 class="section-title">04. Education & Certs</h2>
+        <h2 class="section-title">05. Education & Certs</h2>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-date">Completed</div>
