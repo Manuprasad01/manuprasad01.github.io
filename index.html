@@ -994,6 +994,119 @@
         <p>Built by Manuprasad K | <a href="https://github.com/Manuprasad01" target="_blank">GitHub Pages</a></p>
     </footer>
 
+    <!-- Stylish Music Controller -->
+<div class="cyber-audio">
+    <div class="audio-visualizer" id="visualizer">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <button id="audio-btn" class="audio-btn">
+        <i class="fas fa-play"></i>
+    </button>
+    <span class="audio-label">CYBER_WORLD</span>
+</div>
+
+<style>
+.cyber-audio {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cyber-audio:hover {
+    box-shadow: 0 0 15px var(--accent);
+}
+
+.audio-btn {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.audio-btn:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 5px var(--accent);
+}
+
+.audio-label {
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+}
+
+.audio-visualizer {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    height: 20px;
+}
+
+.audio-visualizer span {
+    width: 3px;
+    height: 10px;
+    background: var(--accent);
+    transition: height 0.1s ease;
+}
+
+@keyframes visualize {
+    0%, 100% { height: 5px; }
+    50% { height: 15px; }
+}
+
+.audio-visualizer.playing span:nth-child(1) { animation: visualize 0.5s ease infinite; }
+.audio-visualizer.playing span:nth-child(2) { animation: visualize 0.7s ease infinite 0.1s; }
+.audio-visualizer.playing span:nth-child(3) { animation: visualize 0.4s ease infinite 0.2s; }
+.audio-visualizer.playing span:nth-child(4) { animation: visualize 0.6s ease infinite 0.3s; }
+.audio-visualizer.playing span:nth-child(5) { animation: visualize 0.8s ease infinite 0.4s; }
+</style>
+
+<script>
+const cyberAudio = new Audio();
+cyberAudio.loop = true;
+cyberAudio.volume = 0.2;
+cyberAudio.src = "effect.mp3"; // Replace with your music file
+
+const audioBtn = document.getElementById('audio-btn');
+const visualizer = document.getElementById('visualizer');
+let audioPlaying = false;
+
+audioBtn.addEventListener('click', () => {
+    if (audioPlaying) {
+        cyberAudio.pause();
+        audioBtn.innerHTML = '<i class="fas fa-play"></i>';
+        visualizer.classList.remove('playing');
+    } else {
+        cyberAudio.play();
+        audioBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        visualizer.classList.add('playing');
+    }
+    audioPlaying = !audioPlaying;
+});
+
+// Try to autoplay
+cyberAudio.play().catch(e => console.log('User interaction needed'));
+</script>
+
     <script>
         // 1. TYPING EFFECT
         const textElement = document.getElementById('typing-text');
