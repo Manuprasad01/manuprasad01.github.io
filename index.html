@@ -177,7 +177,7 @@
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 4rem;
-            align-items: center;
+            align-items: start;
         }
 
         .about-text p {
@@ -200,7 +200,91 @@
         }
 
         .stat span { display: block; font-size: 0.9rem; color: var(--text-secondary); }
-        .stat strong { font-size: 1.2rem; color: #fff; }
+        .stat strong { font-size: 1.1rem; color: #fff; }
+
+        /* --- EXPERIENCE SECTION (NEW) --- */
+        .experience-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .exp-card {
+            background: var(--card-bg);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exp-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -12px rgba(0,0,0,0.4);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+
+        .exp-role {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+
+        .exp-date {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            background: var(--accent-dim);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+        }
+
+        .exp-company {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .exp-company i {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .exp-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .exp-list li {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .exp-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
 
         /* --- SKILLS --- */
         .skills-wrapper {
@@ -346,9 +430,9 @@
             h1 { font-size: 2.5rem; }
             .about-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; } /* Simplified for mobile */
+            .exp-header { flex-direction: column; gap: 0.7rem; }
+            .exp-role { font-size: 1.3rem; }
         }
-
-
 
         /* --- FEATURED CASE STUDY SECTION --- */
         .case-study-container {
@@ -374,7 +458,7 @@
 
         .phase-row {
             display: grid;
-            grid-template-columns: 1fr 1.5fr; /* Text left, Image right */
+            grid-template-columns: 1fr 1.5fr;
             gap: 2rem;
             margin-bottom: 4rem;
             align-items: start;
@@ -382,7 +466,6 @@
 
         .phase-row:last-child { margin-bottom: 0; }
 
-        /* Alternate layout for visual interest */
         .phase-row.reverse { grid-template-columns: 1.5fr 1fr; }
         .phase-row.reverse .phase-content { order: 2; }
         .phase-row.reverse .window-frame { order: 1; }
@@ -421,7 +504,6 @@
             margin-top: 10px;
         }
 
-        /* Terminal Window Styling for Screenshots */
         .window-frame {
             background: #1e1e1e;
             border-radius: 8px;
@@ -456,7 +538,6 @@
             opacity: 0.9;
         }
 
-        /* Mobile Adjustments for Case Study */
         @media (max-width: 768px) {
             .phase-row, .phase-row.reverse {
                 grid-template-columns: 1fr;
@@ -464,8 +545,6 @@
             .phase-row.reverse .phase-content { order: 1; }
             .phase-row.reverse .window-frame { order: 2; }
         }
-
-
     </style>
 </head>
 <body>
@@ -476,10 +555,11 @@
         <div class="logo">MANUPRASAD K</div>
         <div class="nav-links">
             <a href="#about">About</a>
+            <a href="#experience">Experience</a>
             <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
-            <a href="#featured">Case Study</a> <a href="#education">Education</a>
-            <!-- <a href="#education">Education</a> -->
+            <a href="#featured">Case Study</a>
+            <a href="#education">Education</a>
             <a href="resume.pdf" class="btn-download" target="_blank"><i class="fas fa-download"></i> Resume</a>
         </div>
     </nav>
@@ -500,13 +580,17 @@
     <section id="about">
         <h2 class="section-title">01. Identity</h2>
         <div class="about-grid">
+            <div class="about-image">
+    <img src="new.png" alt="Manuprasad K" style="width: 100%; border-radius: 12px; border: 2px solid var(--accent);">
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center;">
+        <img src="ec-council-badge.png" alt="EC-Council" style="height: 40px;">
+        <img src="cisco-badge.png" alt="Cisco" style="height: 40px;">
+    </div>
+</div>
             <div class="about-text">
-                <p>
-                    I am a highly motivated <strong>Cybersecurity Enthusiast</strong> with an M.Sc. in Computer Science. My focus lies in threat detection, incident response, and network security monitoring. I specialize in identifying and mitigating security threats using industry-standard SIEM tools and simulated lab environments.
-                </p>
-                <p>
-                    Currently certified in <strong>IT Infrastructure and SOC Analysis (CICSA)</strong>, I combine theoretical knowledge with hands-on offensive and defensive capabilities. I am actively seeking a role as a SOC Analyst to protect organizational assets.
-                </p>
+                <p>I am a <strong>Cyber Security Analyst</strong> at <strong>Mirox Cyber Security and Technology</strong>, specializing in <strong>Vulnerability Assessment and Penetration Testing (VAPT)</strong>.</p>
+                <p>My role involves performing web application and network penetration testing, identifying vulnerabilities, and helping organizations strengthen their security posture in real-world environments.</p>
+                <p>I focus on both offensive and defensive security, ensuring systems are resilient against modern threats.</p>
             </div>
             <div class="highlight-box">
                 <div class="stat">
@@ -519,16 +603,35 @@
                     <strong>CSA (EC-Council)</strong><br>
                     <strong>CICSA (RedTeam)</strong>
                 </div>
-                <!-- <div class="stat">
-                    <span>Location</span>
-                    <strong>Kannur, Kerala </strong>
-                </div> -->
             </div>
         </div>
     </section>
 
+    <!-- NEW EXPERIENCE SECTION (Based on provided image data) -->
+    <section id="experience">
+        <h2 class="section-title">02. Experience</h2>
+        <div class="experience-grid">
+            <div class="exp-card">
+                <div class="exp-header">
+                    <div class="exp-role">Cyber Security Analyst</div>
+                    <div class="exp-date">Feb 2026 – Present</div>
+                </div>
+                <div class="exp-company">
+                    <i class="fas fa-building"></i> Mirox Cyber Security and Technology Pvt Ltd, Technopark, Trivandrum, Kerala
+                </div>
+                <ul class="exp-list">
+                    <li>Performed penetration testing across  web applications and network infrastructure</li>
+                    <li>Conducted vulnerability assessments using tools like OpenVAS and Nmap, identifying critical security weaknesses.</li>
+                
+                    <li>carried out malware analysis, threat hunting, and provided thorough PoCs and vulnerability assessments with a remedial focus..</li>
+                </ul>
+            </div>
+            <!-- Additional experience placeholder if needed (optional, but stays consistent) -->
+        </div>
+    </section>
+
     <section id="skills">
-        <h2 class="section-title">02. Arsenal</h2>
+        <h2 class="section-title">03. Arsenal</h2>
         <div class="skills-wrapper">
             <div class="skill-pill"><i class="fas fa-search"></i> Wireshark</div>
             <div class="skill-pill"><i class="fas fa-network-wired"></i> Nmap</div>
@@ -537,13 +640,17 @@
             <div class="skill-pill"><i class="fas fa-bug"></i> Burp Suite</div>
             <div class="skill-pill"><i class="fab fa-python"></i> Python </div>
             <div class="skill-pill"><i class="fab fa-linux"></i> Linux (Kali/Ubuntu)</div>
-            <div class="skill-pill"><i class="fas fa-shield-virus"></i> Incident Response </div>
+            <div class="skill-pill"><i class="fas fa-shield-virus"></i> OpenVAS </div>
             <div class="skill-pill"><i class="fas fa-lock"></i> Cryptography (SHA256)</div>
+            <div class="skill-pill"><i class="fas fa-file-code"></i> SIEM (Wazuh)</div>
+            <div class="skill-pill"><i class="fas fa-terminal"></i> Command Line</div>
+            <div class="skill-pill"><i class="fas fa-user-secret"></i> PenTesting</div>
+            <div class="skill-pill"><i class="fas fa-satellite-dish"></i> Security Auditing</div>
         </div>
     </section>
 
     <section id="projects">
-        <h2 class="section-title">03. Operations</h2>
+        <h2 class="section-title">04. Operations</h2>
         <div class="project-grid">
             <div class="project-card">
                 <div class="project-icon"><i class="fas fa-file-code"></i></div>
@@ -555,7 +662,6 @@
                     <span class="tag">Windows 7</span>
                     <span class="tag">Kali linux</span>
                 </div>
-                <!-- <a href="https://github.com/Manuprasad01" class="btn-small">View Code <i class="fas fa-arrow-right"></i></a> -->
             </div>
             
             <div class="project-card">
@@ -603,12 +709,11 @@
                     <span class="tag">SCERT</span>
                 </div>
             </div>
-
         </div>
     </section>
 
-     <section id="featured">
-        <h2 class="section-title">04. Featured Case Study</h2>
+    <section id="featured">
+        <h2 class="section-title">05. Featured Case Study</h2>
         
         <div class="case-study-container">
             
@@ -668,19 +773,17 @@
                     <img src="image3.png" alt="Expanded Log Details">
                 </div>
             </div>
-
         </div>
     </section>
 
     <section id="education">
-        <h2 class="section-title">05. Education & Certs</h2>
+        <h2 class="section-title">06. Education & Certs</h2>
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-date">Completed</div>
                 <h3>Certified SOC Analyst (CSA)</h3>
                 <p>EC-Council</p>
             </div>
-
 
             <div class="timeline-item">
                 <div class="timeline-date">Completed</div>
@@ -715,7 +818,7 @@
     <script>
         // 1. TYPING EFFECT
         const textElement = document.getElementById('typing-text');
-        const phrases = ["SOC Analyst", "Threat Hunter", "Security Enthusiast", "Python Developer"];
+        const phrases = ["Cyber Security Analyst", "VAPT Specialist", "Web Penetration Tester", "Network Penetration Tester", "Python Developer"];
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -733,11 +836,11 @@
 
             if (!isDeleting && charIndex === currentPhrase.length) {
                 isDeleting = true;
-                setTimeout(type, 2000); // Pause at end
+                setTimeout(type, 2000);
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 phraseIndex = (phraseIndex + 1) % phrases.length;
-                setTimeout(type, 500); // Pause before new word
+                setTimeout(type, 500);
             } else {
                 setTimeout(type, isDeleting ? 100 : 200);
             }
@@ -778,10 +881,10 @@
         const rainDrops = Array(Math.ceil(columns)).fill(1);
 
         function draw() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)'; // Fade effect
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#0F0'; // Green text
+            ctx.fillStyle = '#0F0';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < rainDrops.length; i++) {
