@@ -15,7 +15,7 @@
             --card-bg: #0f1219;
             --text-primary: #e0e6ed;
             --text-secondary: #94a3b8;
-            --accent: #00ff41; /* Matrix Green */
+            --accent: #00ff41;
             --accent-dim: rgba(0, 255, 65, 0.1);
             --glass: rgba(15, 18, 25, 0.85);
             --transition: all 0.3s ease;
@@ -32,13 +32,14 @@
 
         /* --- MATRIX CANVAS --- */
         #matrix-canvas {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            opacity: 0.15;
+            opacity: 0.12;
+            pointer-events: none;
         }
 
         /* --- NAVIGATION --- */
@@ -122,7 +123,7 @@
             font-family: 'Share Tech Mono', monospace;
             font-size: 1.5rem;
             color: var(--accent);
-            height: 2rem; /* Reserve space */
+            height: 2rem;
         }
 
         .social-hero {
@@ -145,9 +146,11 @@
         /* --- SECTIONS COMMON --- */
         section {
             padding: 6rem 10%;
-            opacity: 0; /* For scroll reveal */
+            opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            position: relative;
+            z-index: 1;
         }
 
         section.visible {
@@ -172,10 +175,10 @@
             background: var(--accent);
         }
 
-        /* --- ABOUT --- */
+        /* --- ABOUT with ANIMATED IMAGE --- */
         .about-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1fr 2fr;
             gap: 4rem;
             align-items: start;
         }
@@ -184,6 +187,150 @@
             margin-bottom: 1.5rem;
             color: var(--text-secondary);
             line-height: 1.8;
+        }
+
+        /* CYBERPUNK IMAGE FRAME WITH GLITCH EFFECT */
+        .cyber-image-frame {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .glitch-img {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .glitch-wrapper:hover .glitch-img {
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        .glitch-wrapper::before,
+        .glitch-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            background: var(--accent);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .glitch-wrapper:hover::before {
+            animation: glitch-scan 0.3s infinite;
+            opacity: 0.15;
+        }
+
+        @keyframes glitch-scan {
+            0% { transform: translate(0, 0); opacity: 0.1; background: #ff00ff; }
+            50% { transform: translate(2px, -2px); opacity: 0.2; background: #00ff41; }
+            100% { transform: translate(-1px, 1px); opacity: 0.1; background: #00ffff; }
+        }
+
+        /* PULSING BORDER EFFECT */
+        .cyber-border {
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, var(--accent), #ff00ff, var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .cyber-image-frame:hover .cyber-border {
+            opacity: 0.6;
+            animation: border-pulse 1.5s ease infinite;
+        }
+
+        @keyframes border-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* SCANLINE OVERLAY */
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 65, 0.05) 0px,
+                rgba(0, 255, 65, 0.05) 2px,
+                transparent 2px,
+                transparent 6px
+            );
+            pointer-events: none;
+            border-radius: 12px;
+        }
+
+        /* HOLOGRAPHIC BADGES */
+        .holographic-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .holo-badge {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--accent);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .holo-badge:hover::before {
+            animation: shine 0.8s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .holo-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--accent);
         }
 
         .highlight-box {
@@ -202,7 +349,7 @@
         .stat span { display: block; font-size: 0.9rem; color: var(--text-secondary); }
         .stat strong { font-size: 1.1rem; color: #fff; }
 
-        /* --- EXPERIENCE SECTION (NEW) --- */
+        /* --- EXPERIENCE SECTION --- */
         .experience-grid {
             display: flex;
             flex-direction: column;
@@ -306,7 +453,7 @@
             cursor: default;
         }
 
-        .skill-pill i { color: var(--accent); }
+        .skill-pill i { color: var(--accent); font-size: 1.2rem; }
 
         .skill-pill:hover {
             border-color: var(--accent);
@@ -314,10 +461,10 @@
             transform: translateY(-3px);
         }
 
-        /* --- PROJECTS --- */
+        /* --- PROJECT CARDS with IMAGE PLACEHOLDERS --- */
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 2rem;
         }
 
@@ -362,6 +509,38 @@
             margin-bottom: 1.5rem;
         }
 
+        .project-preview {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #0a0f1a, #0a0f1a);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            border: 1px solid #1e293b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-preview::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover .project-preview::after {
+            left: 100%;
+        }
+
         .tags {
             display: flex;
             flex-wrap: wrap;
@@ -384,9 +563,15 @@
             color: #fff;
             border-bottom: 1px solid var(--accent);
             padding-bottom: 2px;
+            transition: var(--transition);
         }
 
-        /* --- TIMELINE (Education) --- */
+        .btn-small:hover {
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        /* --- TIMELINE --- */
         .timeline {
             position: relative;
             border-left: 2px solid #1e293b;
@@ -416,25 +601,71 @@
             margin-bottom: 0.5rem;
         }
 
-        /* --- FOOTER --- */
-        footer {
-            text-align: center;
-            padding: 3rem;
-            border-top: 1px solid #1e293b;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        /* --- CASE STUDY IMAGES with ENHANCED EFFECTS --- */
+        .window-frame {
+            background: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .about-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; } /* Simplified for mobile */
-            .exp-header { flex-direction: column; gap: 0.7rem; }
-            .exp-role { font-size: 1.3rem; }
+        .window-frame:hover {
+            transform: scale(1.02) translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(0, 255, 65, 0.2);
         }
 
-        /* --- FEATURED CASE STUDY SECTION --- */
+        .window-header {
+            background: #2d2d2d;
+            padding: 8px 15px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+
+        .window-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .window-frame:hover img {
+            filter: brightness(1.05) contrast(1.05);
+        }
+
+        .phase-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            align-items: start;
+        }
+
+        .phase-row.reverse { grid-template-columns: 1.5fr 1fr; }
+        .phase-row.reverse .phase-content { order: 2; }
+        .phase-row.reverse .window-frame { order: 1; }
+
+        .phase-badge {
+            display: inline-block;
+            background: var(--accent-dim);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--accent);
+        }
+
         .case-study-container {
             background: rgba(15, 18, 25, 0.5);
             border: 1px solid #1e293b;
@@ -456,94 +687,33 @@
             border: 1px solid #1e293b;
         }
 
-        .phase-row {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 2rem;
-            margin-bottom: 4rem;
-            align-items: start;
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid #1e293b;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .phase-row:last-child { margin-bottom: 0; }
-
-        .phase-row.reverse { grid-template-columns: 1.5fr 1fr; }
-        .phase-row.reverse .phase-content { order: 2; }
-        .phase-row.reverse .window-frame { order: 1; }
-
-        .phase-badge {
-            display: inline-block;
-            background: var(--accent-dim);
+        footer a {
             color: var(--accent);
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            border: 1px solid var(--accent);
+            text-decoration: none;
         }
 
-        .phase-content h3 {
-            margin-bottom: 1rem;
-            color: #fff;
-            font-size: 1.3rem;
-        }
-
-        .phase-content p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .caption {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            border-left: 2px solid var(--accent);
-            padding-left: 10px;
-            margin-top: 10px;
-        }
-
-        .window-frame {
-            background: #1e1e1e;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: transform 0.3s ease;
-        }
-
-        .window-frame:hover {
-            transform: scale(1.02);
-            border-color: var(--accent);
-        }
-
-        .window-header {
-            background: #2d2d2d;
-            padding: 8px 15px;
-            display: flex;
-            gap: 8px;
-            border-bottom: 1px solid #333;
-        }
-
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .red { background: #ff5f56; }
-        .yellow { background: #ffbd2e; }
-        .green { background: #27c93f; }
-
-        .window-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
-            opacity: 0.9;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
-            .phase-row, .phase-row.reverse {
-                grid-template-columns: 1fr;
-            }
+            h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .nav-links { display: none; }
+            .exp-header { flex-direction: column; gap: 0.7rem; }
+            .phase-row, .phase-row.reverse { grid-template-columns: 1fr; }
             .phase-row.reverse .phase-content { order: 1; }
             .phase-row.reverse .window-frame { order: 2; }
+            .section-title::after { left: 50%; transform: translateX(-50%); }
+            .section-title { display: block; text-align: center; }
         }
     </style>
 </head>
@@ -580,13 +750,24 @@
     <section id="about">
         <h2 class="section-title">01. Identity</h2>
         <div class="about-grid">
-            <div class="about-image">
-    <img src="new.png" alt="Manuprasad K" style="width: 100%; border-radius: 12px; border: 2px solid var(--accent);">
-    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center;">
-        <img src="ec-council-badge.png" alt="EC-Council" style="height: 40px;">
-        <img src="cisco-badge.png" alt="Cisco" style="height: 40px;">
-    </div>
-</div>
+            <div>
+                <div class="cyber-image-frame">
+                    <div class="glitch-wrapper">
+                        <img src="new.png" alt="Manuprasad K" class="glitch-img" id="profileImg" onerror="this.src='https://via.placeholder.com/400x400/0f1219/00ff41?text=Manuprasad+K'">
+                        <div class="scan-overlay"></div>
+                    </div>
+                    <div class="cyber-border"></div>
+                </div>
+                <div class="holographic-badges">
+                    <div class="holo-badge"><i class="fas fa-shield-alt"></i> CSA</div>
+                    <div class="holo-badge"><i class="fas fa-lock"></i> CICSA</div>
+                    <div class="holo-badge"><i class="fas fa-certificate"></i> Cisco</div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center;">
+                    <img src="ecc.png" alt="EC-Council" style="height: 40px;" onerror="this.style.display='none'">
+                    <img src="cisco.png" alt="Cisco" style="height: 40px;" onerror="this.style.display='none'">
+                </div>
+            </div>
             <div class="about-text">
                 <p>I am a <strong>Cyber Security Analyst</strong> at <strong>Mirox Cyber Security and Technology</strong>, specializing in <strong>Vulnerability Assessment and Penetration Testing (VAPT)</strong>.</p>
                 <p>My role involves performing web application and network penetration testing, identifying vulnerabilities, and helping organizations strengthen their security posture in real-world environments.</p>
@@ -607,7 +788,6 @@
         </div>
     </section>
 
-    <!-- NEW EXPERIENCE SECTION (Based on provided image data) -->
     <section id="experience">
         <h2 class="section-title">02. Experience</h2>
         <div class="experience-grid">
@@ -620,13 +800,11 @@
                     <i class="fas fa-building"></i> Mirox Cyber Security and Technology Pvt Ltd, Technopark, Trivandrum, Kerala
                 </div>
                 <ul class="exp-list">
-                    <li>Performed penetration testing across  web applications and network infrastructure</li>
+                    <li>Performed penetration testing across web applications and network infrastructure</li>
                     <li>Conducted vulnerability assessments using tools like OpenVAS and Nmap, identifying critical security weaknesses.</li>
-                
-                    <li>carried out malware analysis, threat hunting, and provided thorough PoCs and vulnerability assessments with a remedial focus..</li>
+                    <li>Carried out malware analysis, threat hunting, and provided thorough PoCs and vulnerability assessments with a remedial focus.</li>
                 </ul>
             </div>
-            <!-- Additional experience placeholder if needed (optional, but stays consistent) -->
         </div>
     </section>
 
@@ -638,10 +816,10 @@
             <div class="skill-pill"><i class="fas fa-chart-bar"></i> Splunk</div>
             <div class="skill-pill"><i class="fas fa-bomb"></i> Metasploit</div>
             <div class="skill-pill"><i class="fas fa-bug"></i> Burp Suite</div>
-            <div class="skill-pill"><i class="fab fa-python"></i> Python </div>
+            <div class="skill-pill"><i class="fab fa-python"></i> Python</div>
             <div class="skill-pill"><i class="fab fa-linux"></i> Linux (Kali/Ubuntu)</div>
-            <div class="skill-pill"><i class="fas fa-shield-virus"></i> OpenVAS </div>
-            <div class="skill-pill"><i class="fas fa-lock"></i> Cryptography (SHA256)</div>
+            <div class="skill-pill"><i class="fas fa-shield-virus"></i> OpenVAS</div>
+            <div class="skill-pill"><i class="fas fa-lock"></i> Cryptography</div>
             <div class="skill-pill"><i class="fas fa-file-code"></i> SIEM (Wazuh)</div>
             <div class="skill-pill"><i class="fas fa-terminal"></i> Command Line</div>
             <div class="skill-pill"><i class="fas fa-user-secret"></i> PenTesting</div>
@@ -653,8 +831,12 @@
         <h2 class="section-title">04. Operations</h2>
         <div class="project-grid">
             <div class="project-card">
-                <div class="project-icon"><i class="fas fa-file-code"></i></div>
-                <h3>Wazuh SIEM Threat Detection Lab:</h3>
+                <div class="project-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="project-preview">
+                    <i class="fas fa-chart-line" style="font-size: 3rem; opacity: 0.5;"></i>
+                    <span style="position: absolute;">SIEM Dashboard</span>
+                </div>
+                <h3>Wazuh SIEM Threat Detection Lab</h3>
                 <p>Deployed a Wazuh SIEM environment to monitor a Windows 7 endpoint for security threats.</p>
                 <div class="tags">
                     <span class="tag">Wazuh</span>
@@ -666,8 +848,12 @@
             
             <div class="project-card">
                 <div class="project-icon"><i class="fas fa-file-code"></i></div>
+                <div class="project-preview">
+                    <i class="fas fa-code" style="font-size: 3rem; opacity: 0.5;"></i>
+                    <span style="position: absolute;">Python Terminal</span>
+                </div>
                 <h3>File Integrity Checker</h3>
-                <p>Engineered a Python tool to calculate and verify cryptographic hashes (SHA256). Ensures data integrity by detecting unauthorized file modifications.</p>
+                <p>Engineered a Python tool to calculate and verify cryptographic hashes (SHA256). Ensures data integrity.</p>
                 <div class="tags">
                     <span class="tag">Python</span>
                     <span class="tag">Cryptography</span>
@@ -678,8 +864,12 @@
 
             <div class="project-card">
                 <div class="project-icon"><i class="fas fa-user-secret"></i></div>
+                <div class="project-preview">
+                    <i class="fas fa-terminal" style="font-size: 3rem; opacity: 0.5;"></i>
+                    <span style="position: absolute;">Kali Linux</span>
+                </div>
                 <h3>VulnHub Exploitation</h3>
-                <p>Exploited the "Matrix-Breakout: 2 Morpheus" machine. Performed reconnaissance, enumeration, and privilege escalation to gain root access.</p>
+                <p>Exploited the "Matrix-Breakout: 2 Morpheus" machine. Performed reconnaissance and privilege escalation.</p>
                 <div class="tags">
                     <span class="tag">Kali Linux</span>
                     <span class="tag">PenTesting</span>
@@ -690,8 +880,12 @@
 
             <div class="project-card">
                 <div class="project-icon"><i class="fas fa-satellite-dish"></i></div>
+                <div class="project-preview">
+                    <i class="fas fa-network-wired" style="font-size: 3rem; opacity: 0.5;"></i>
+                    <span style="position: absolute;">Network Analysis</span>
+                </div>
                 <h3>Network Defense Labs</h3>
-                <p>Hands-on simulation of real-world threats on TryHackMe & EC-Council iLabs. Analyzed traffic with Wireshark and mapped networks via Nmap.</p>
+                <p>Hands-on simulation of real-world threats on TryHackMe & EC-Council iLabs.</p>
                 <div class="tags">
                     <span class="tag">Wireshark</span>
                     <span class="tag">Nmap</span>
@@ -699,10 +893,14 @@
                 </div>
             </div>
 
-             <div class="project-card">
+            <div class="project-card">
                 <div class="project-icon"><i class="fas fa-gamepad"></i></div>
+                <div class="project-preview">
+                    <i class="fas fa-gamepad" style="font-size: 3rem; opacity: 0.5;"></i>
+                    <span style="position: absolute;">Game Dev</span>
+                </div>
                 <h3>Auditory Sensing Game</h3>
-                <p>Developed an accessible auditory game for autistic students under SCERT. Solved user-centric challenges through software design.</p>
+                <p>Developed an accessible auditory game for autistic students under SCERT.</p>
                 <div class="tags">
                     <span class="tag">Development</span>
                     <span class="tag">Accessibility</span>
@@ -716,23 +914,16 @@
         <h2 class="section-title">05. Featured Case Study</h2>
         
         <div class="case-study-container">
-            
             <div class="phase-row">
                 <div class="phase-content">
                     <span class="phase-badge">PHASE 1: OFFENSE (RED TEAM)</span>
                     <h3>SMB Brute Force Execution</h3>
-                    <p>
-                        Using <strong>Kali Linux</strong>, I simulated an unauthorized access attempt targeting the Windows 7 endpoint. I utilized <strong>Hydra</strong> to execute a dictionary attack against the SMB protocol (Port 445), deliberately generating high-volume authentication traffic to test the SIEM's threshold settings.
-                    </p>
-                    <div class="caption">
-                        CMD: hydra -l Manu -p wrongpass smb://192.168.20.7
-                    </div>
+                    <p>Using <strong>Kali Linux</strong>, I simulated an unauthorized access attempt targeting the Windows 7 endpoint. I utilized <strong>Hydra</strong> to execute a dictionary attack against the SMB protocol (Port 445), deliberately generating high-volume authentication traffic to test the SIEM's threshold settings.</p>
+                    <div class="caption">CMD: hydra -l Manu -p wrongpass smb://192.168.20.7</div>
                 </div>
                 <div class="window-frame">
-                    <div class="window-header">
-                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                    </div>
-                    <img src="image1.png" alt="Kali Linux Hydra Attack Terminal">
+                    <div class="window-header"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <img src="image1.png" alt="Kali Linux Hydra Attack Terminal" onerror="this.src='https://via.placeholder.com/600x300/0a0a0a/00ff41?text=Kali+Linux+Hydra+Attack'">
                 </div>
             </div>
 
@@ -740,18 +931,12 @@
                 <div class="phase-content">
                     <span class="phase-badge">PHASE 2: DETECTION (BLUE TEAM)</span>
                     <h3>Real-Time Alert Triggering</h3>
-                    <p>
-                        The <strong>Wazuh Manager</strong> successfully ingested logs from the Windows Agent. The custom Audit Policy I configured (Event ID 4625) ensured failures were recorded. The dashboard immediately visualized a spike in severity, triggering <strong>Rule ID 60122</strong> (Logon Failure) 11 times in rapid succession.
-                    </p>
-                    <div class="caption">
-                        "Wazuh SIEM detecting the spike in failed login attempts in real-time."
-                    </div>
+                    <p>The <strong>Wazuh Manager</strong> successfully ingested logs from the Windows Agent. The custom Audit Policy I configured (Event ID 4625) ensured failures were recorded. The dashboard immediately visualized a spike in severity, triggering <strong>Rule ID 60122</strong> (Logon Failure) 11 times in rapid succession.</p>
+                    <div class="caption">Wazuh SIEM detecting the spike in failed login attempts in real-time.</div>
                 </div>
                 <div class="window-frame">
-                    <div class="window-header">
-                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                    </div>
-                    <img src="image2.png" alt="Wazuh Dashboard Alerts">
+                    <div class="window-header"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <img src="image2.png" alt="Wazuh Dashboard Alerts" onerror="this.src='https://via.placeholder.com/600x300/0a0a0a/00ff41?text=Wazuh+Dashboard+Alerts'">
                 </div>
             </div>
 
@@ -759,18 +944,12 @@
                 <div class="phase-content">
                     <span class="phase-badge">PHASE 3: FORENSICS & ANALYSIS</span>
                     <h3>IOC Identification</h3>
-                    <p>
-                        Drilling down into the alert data provided concrete <strong>Indicators of Compromise (IOCs)</strong>. I successfully correlated the timestamp of the alerts with the attacker's machine. The log data confirmed the Source IP <code>192.168.20.8</code> and the targeted user account "Manu", validating the nature of the attack.
-                    </p>
-                    <div class="caption">
-                        "Forensic analysis confirming the attack source originated from 192.168.20.8"
-                    </div>
+                    <p>Drilling down into the alert data provided concrete <strong>Indicators of Compromise (IOCs)</strong>. I successfully correlated the timestamp of the alerts with the attacker's machine. The log data confirmed the Source IP <code>192.168.20.8</code> and the targeted user account "Manu", validating the nature of the attack.</p>
+                    <div class="caption">Forensic analysis confirming the attack source originated from 192.168.20.8</div>
                 </div>
                 <div class="window-frame">
-                    <div class="window-header">
-                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-                    </div>
-                    <img src="image3.png" alt="Expanded Log Details">
+                    <div class="window-header"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+                    <img src="image3.png" alt="Expanded Log Details" onerror="this.src='https://via.placeholder.com/600x300/0a0a0a/00ff41?text=Forensic+Log+Details'">
                 </div>
             </div>
         </div>
@@ -806,13 +985,13 @@
             <div class="timeline-item">
                 <div class="timeline-date">2019 - 2022</div>
                 <h3>B.Sc. Computer Science (82.4%)</h3>
-                <p>Government College Kasaragod</p>
+                <p>Government College Kasarod</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>Built by Manuprasad K | <a href="https://github.com/Manuprasad01" style="color: var(--accent);">GitHub Pages</a></p>
+        <p>Built by Manuprasad K | <a href="https://github.com/Manuprasad01" target="_blank">GitHub Pages</a></p>
     </footer>
 
     <script>
